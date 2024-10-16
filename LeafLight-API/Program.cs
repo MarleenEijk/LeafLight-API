@@ -34,7 +34,7 @@ namespace LeafLight_API
 
             app.MapGet("/", () =>
             {
-                return Results.Redirect("/api/plants");
+                return Results.Redirect("/api/users");
             });
 
             app.Run(); ;
