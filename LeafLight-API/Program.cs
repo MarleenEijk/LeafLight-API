@@ -29,16 +29,25 @@ namespace LeafLight_API
 
             builder.Services.AddControllers();
 
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
             var app = builder.Build();
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
+                });
+            }
 
             app.UseCors("MyCors");
 
             app.MapControllers();
 
-            app.MapGet("/", () =>
-            {
-                return Results.Redirect("/api/users");
-            });
+            app.MapGet("/", () => "");
 
             app.Run(); ;
         }
