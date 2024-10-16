@@ -4,11 +4,11 @@ namespace LeafLight_API.Repositories
 {
     public interface IUserRepository
     {
-        Task<IEnumerable<User>> GetAllasync();
-        Task<User> GetById(int id);
-        Task AddUserASync(User user);
-        Task UpdateUserASync(User user);
-        Task DeleteUserASync(int id);
+        Task<IEnumerable<User>> GetAllAsync();
+        Task<User?> GetByIdAsync(int id);
+        Task AddUserAsync(User user);
+        Task UpdateUserAsync(User user);
+        Task DeleteUserAsync(int id);
 
     }
 }
