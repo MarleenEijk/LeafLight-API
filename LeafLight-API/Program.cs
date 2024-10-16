@@ -13,7 +13,7 @@ namespace LeafLight_API
 
             builder.Services.AddDbContext<AppDbContext>(
                 options => options.UseInMemoryDatabase("LeafLightDb")
-                );
+            );
 
             builder.Services.AddCors(options =>
             {
@@ -45,11 +45,15 @@ namespace LeafLight_API
 
             app.UseCors("MyCors");
 
+            app.UseRouting();
+
+            app.UseAuthorization();
+
             app.MapControllers();
 
-            app.MapGet("/", () => "");
+            app.MapGet("/", () => "Welcome to LeafLight API");
 
-            app.Run(); ;
+            app.Run();
         }
     }
 }
