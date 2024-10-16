@@ -1,4 +1,5 @@
 using LeafLight_API.Data;
+using LeafLight_API.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.InMemory;
 
@@ -9,8 +10,6 @@ namespace LeafLight_API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-            builder.Services.AddControllers();
 
             builder.Services.AddDbContext<AppDbContext>(
                 options => options.UseInMemoryDatabase("LeafLightDb")
@@ -25,6 +24,10 @@ namespace LeafLight_API
                     .AllowAnyHeader();
                 });
             });
+
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+            builder.Services.AddControllers();
 
             var app = builder.Build();
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using LeafLight_API.Models;
+using LeafLight_API.Repositories;
 
 namespace LeafLight_API.Controllers
 {
@@ -7,16 +8,18 @@ namespace LeafLight_API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private User[] _users = new User[]
-        {
-            new User { Id = 1, Name = "user1", Emailadress = "user1@mail.com", Password = "Password1"
-            },
-        };
+        private readonly IUserRepository _userRepository;
 
-        [HttpGet]
-        public ActionResult<IEnumerable<User>> GetUsers()
+        public UsersController(IUserRepository userRepository) 
+        { 
+            _userRepository = userRepository;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<User>> CreateUser(User user)
         {
-            return Ok(_users);
+            await _userRepository.AddUserAsync(user);
+            return Created();
         }
     }
 }
