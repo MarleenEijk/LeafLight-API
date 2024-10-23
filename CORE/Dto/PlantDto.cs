@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CORE.Dto
 {
-    public class Plant_dto
+    public class PlantDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

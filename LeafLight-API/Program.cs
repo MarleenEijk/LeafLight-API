@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.InMemory;
 using DATA;
 using DATA.Repositories;
 using CORE.Interfaces;
+using CORE.Services;
 
 namespace LeafLight_API
 {
@@ -27,6 +27,8 @@ namespace LeafLight_API
             });
 
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+            builder.Services.AddScoped<IUserService, UserService>();
 
             builder.Services.AddControllers();
 

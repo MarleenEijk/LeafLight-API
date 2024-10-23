@@ -61,7 +61,7 @@ namespace DATA.Repositories
 
         public async Task AddUserAsync(User user)
         {
-            var userDto = new User_dto
+            var userDto = new UserDto
             {
                 Id = user.Id,
                 Name = user.Name,

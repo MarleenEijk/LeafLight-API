@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using CORE.Models;
 using CORE.Interfaces;
+using CORE.Dto;
 
 namespace LeafLight_API.Controllers
 {
@@ -8,29 +8,37 @@ namespace LeafLight_API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUserService _userService;
 
-        public UsersController(IUserRepository userRepository)
+        public UsersController(IUserService userService)
         {
-            _userRepository = userRepository;
+            _userService = userService;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsersAsync()
+        {
+            var userDtos = await _userService.GetAllUsersAsync();
+            return Ok(userDtos);
         }
 
         [HttpPost]
-        public async Task<ActionResult<User>> CreateUser(User user)
+        public async Task<ActionResult<UserDto>> CreateUser(UserDto userDto)
         {
-            await _userRepository.AddUserAsync(user);
-            return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
+            await _userService.AddUserAsync(userDto);
+            return CreatedAtAction(nameof(GetUserById), new {id = userDto.Id});
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUserById(int id)
+        public async Task<ActionResult<UserDto>> GetUserById(int id)
         {
-            var user = await _userRepository.GetByIdAsync(id);
-            if (user == null)
+            var userDto = await _userService.GetUserByIdAsync(id);
+            if (userDto == null)
             {
                 return NotFound();
             }
-            return Ok(user);
+            return Ok(userDto);
         }
     }
 }
+
