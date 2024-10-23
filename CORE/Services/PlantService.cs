@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CORE.Services
 {
-    public class PlantService
+    public class PlantService : IPlantService
     {
         private readonly IPlantRepository _plantRepository;
 
