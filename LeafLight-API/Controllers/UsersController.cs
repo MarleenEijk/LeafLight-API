@@ -47,6 +47,17 @@ namespace LeafLight_API.Controllers
             await _userService.DeleteUserAsync(id);
             return NoContent();
         }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<UserDto>> UpdateUser(int id, UserDto userDto)
+        {
+            if (id != userDto.Id)
+            {
+                return BadRequest();
+            }
+            await _userService.UpdateUserAsync(userDto);
+            return CreatedAtAction(nameof(GetUserById), new { id = userDto.Id }, userDto);
+        }
     }
 }
 

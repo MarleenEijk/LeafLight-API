@@ -2,6 +2,7 @@
 using CORE.Dto;
 using Microsoft.EntityFrameworkCore;
 using CORE.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace DATA.Repositories
 {
@@ -83,6 +84,7 @@ namespace DATA.Repositories
             }
             _context.Users.Remove(userDto);
             await _context.SaveChangesAsync();
+
         }
     }
 }
