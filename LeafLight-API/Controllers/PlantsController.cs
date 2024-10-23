@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using LeafLight_API.Models;
+using CORE.Models;
 
 namespace LeafLight_API.Controllers
 {

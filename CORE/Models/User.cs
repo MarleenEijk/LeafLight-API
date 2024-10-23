@@ -1,4 +1,4 @@
-﻿namespace LeafLight_API.Models
+﻿namespace CORE.Models
 {
     public class User
     {

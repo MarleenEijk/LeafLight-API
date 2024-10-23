@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using LeafLight_API.Models;
-using LeafLight_API.Repositories;
+using CORE.Models;
+using CORE.Interfaces;
 
 namespace LeafLight_API.Controllers
 {

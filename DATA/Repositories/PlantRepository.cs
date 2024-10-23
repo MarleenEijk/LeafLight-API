@@ -1,8 +1,8 @@
-﻿using LeafLight_API.Data;
-using LeafLight_API.Models;
+﻿using CORE.Interfaces;
+using CORE.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace LeafLight_API.Repositories
+namespace DATA.Repositories
 {
     public class PlantRepository : IPlantRepository
     {

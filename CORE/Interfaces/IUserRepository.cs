@@ -1,6 +1,6 @@
-﻿using LeafLight_API.Models;
+﻿using CORE.Models;
 
-namespace LeafLight_API.Repositories
+namespace CORE.Interfaces
 {
     public interface IUserRepository
     {
