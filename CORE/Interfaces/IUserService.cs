@@ -8,8 +8,11 @@ namespace CORE.Interfaces
     {
         Task<IEnumerable<UserDto>> GetAllUsersAsync();
         Task<UserDto?> GetUserByIdAsync(int id);
-        Task AddUserAsync(UserDto userDto);
+        Task<UserDto> AddUserAsync(UserDto userDto);
         Task UpdateUserAsync(UserDto userDto);
         Task DeleteUserAsync(int id);
     }
+
+
+
 }

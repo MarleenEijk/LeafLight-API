@@ -45,17 +45,20 @@ namespace CORE.Services
             };
         }
 
-        public async Task AddUserAsync(UserDto userDto)
+        public async Task<UserDto> AddUserAsync(UserDto userDto)
         {
             var user = new User
             {
-                Id = userDto.Id,
                 Name = userDto.Name,
                 Emailadress = userDto.Emailadress,
                 Password = userDto.Password
             };
 
             await _userRepository.AddUserAsync(user);
+
+            userDto.Id = user.Id;
+
+            return userDto;
         }
 
         public async Task UpdateUserAsync(UserDto userDto)
@@ -77,3 +80,4 @@ namespace CORE.Services
         }
     }
 }
+

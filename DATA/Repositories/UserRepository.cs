@@ -63,7 +63,6 @@ namespace DATA.Repositories
         {
             var userDto = new UserDto
             {
-                Id = user.Id,
                 Name = user.Name,
                 Emailadress = user.Emailadress,
                 Password = user.Password
@@ -71,6 +70,8 @@ namespace DATA.Repositories
 
             await _context.Users.AddAsync(userDto);
             await _context.SaveChangesAsync();
+
+            user.Id = userDto.Id;
         }
 
         public async Task DeleteUserAsync(int id)

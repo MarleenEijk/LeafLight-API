@@ -25,9 +25,10 @@ namespace LeafLight_API.Controllers
         [HttpPost]
         public async Task<ActionResult<UserDto>> CreateUser(UserDto userDto)
         {
-            await _userService.AddUserAsync(userDto);
-            return CreatedAtAction(nameof(GetUserById), new {id = userDto.Id});
+            var createdUser = await _userService.AddUserAsync(userDto);
+            return CreatedAtAction(nameof(GetUserById), new { id = userDto.Id }, userDto);
         }
+
 
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetUserById(int id)
@@ -38,6 +39,13 @@ namespace LeafLight_API.Controllers
                 return NotFound();
             }
             return Ok(userDto);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteUserById(int id)
+        {
+            await _userService.DeleteUserAsync(id);
+            return NoContent();
         }
     }
 }
