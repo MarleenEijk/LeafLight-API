@@ -15,22 +15,23 @@ namespace DATA.Repositories
 
         public async Task<IEnumerable<Plant>> GetAllAsync()
         {
-            var plantDtos = await _context.Plants.ToListAsync();
+            var plantDtos = await _context.plant.ToListAsync();
             return plantDtos.Select(dto => new Plant
             {
                 Id = dto.Id,
                 Name = dto.Name,
                 Description = dto.Description,
                 Location = dto.Location,
-                Watering = dto.Watering,
+                Water = dto.Water,
                 Repotting = dto.Repotting,
-                Toxic = dto.Toxic
+                Toxic = dto.Toxic,
+                Image = dto.Image
             });
         }
 
-        public async Task<Plant?> GetByIdAsync(int id)
+        public async Task<Plant?> GetByIdAsync(long id)
         {
-            var plantDto = await _context.Plants.FindAsync(id);
+            var plantDto = await _context.plant.FindAsync(id);
             if (plantDto == null)
             {
                 return null;
@@ -42,9 +43,10 @@ namespace DATA.Repositories
                 Name = plantDto.Name,
                 Description = plantDto.Description,
                 Location = plantDto.Location,
-                Watering = plantDto.Watering,
+                Water = plantDto.Water,
                 Repotting = plantDto.Repotting,
-                Toxic = plantDto.Toxic
+                Toxic = plantDto.Toxic,
+                Image = plantDto.Image
             };
         }
     }

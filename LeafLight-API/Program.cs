@@ -11,10 +11,8 @@ namespace LeafLight_API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-            builder.Services.AddDbContext<AppDbContext>(
-                options => options.UseInMemoryDatabase("LeafLightDb")
-            );
+            builder.Services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddCors(options =>
             {
@@ -27,11 +25,11 @@ namespace LeafLight_API
             });
 
             builder.Services.AddScoped<IUserRepository, UserRepository>();
-
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IPlantRepository, PlantRepository>();
+            builder.Services.AddScoped<IPlantService, PlantService>();
 
             builder.Services.AddControllers();
-
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -47,13 +45,9 @@ namespace LeafLight_API
             }
 
             app.UseCors("MyCors");
-
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.MapControllers();
-
             app.MapGet("/", () => "Welcome to LeafLight API");
 
             app.Run();

@@ -23,12 +23,12 @@ namespace CORE.Services
             {
                 Id = user.Id,
                 Name = user.Name,
-                Emailadress = user.Emailadress,
+                Emailaddress = user.Emailaddress,
                 Password = user.Password
             }).ToList();
         }
 
-        public async Task<UserDto?> GetUserByIdAsync(int id)
+        public async Task<UserDto?> GetUserByIdAsync(long id)
         {
             var user = await _userRepository.GetByIdAsync(id);
             if (user == null)
@@ -40,7 +40,7 @@ namespace CORE.Services
             {
                 Id = user.Id,
                 Name = user.Name,
-                Emailadress = user.Emailadress,
+                Emailaddress = user.Emailaddress,
                 Password = user.Password
             };
         }
@@ -50,7 +50,7 @@ namespace CORE.Services
             var user = new User
             {
                 Name = userDto.Name,
-                Emailadress = userDto.Emailadress,
+                Emailaddress = userDto.Emailaddress,
                 Password = userDto.Password
             };
 
@@ -67,14 +67,14 @@ namespace CORE.Services
             {
                 Id = userDto.Id,
                 Name = userDto.Name,
-                Emailadress = userDto.Emailadress,
+                Emailaddress = userDto.Emailaddress,
                 Password = userDto.Password
             };
 
             await _userRepository.UpdateUserAsync(user);
         }
 
-        public async Task DeleteUserAsync(int id)
+        public async Task DeleteUserAsync(long id)
         {
             await _userRepository.DeleteUserAsync(id);
         }
