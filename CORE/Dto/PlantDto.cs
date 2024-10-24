@@ -15,5 +15,6 @@ namespace CORE.Dto
         public string Watering { get; set; }
         public string Repotting { get; set; }
         public string Toxic { get; set; }
+        public string Image { get; set; }
     }
 }
