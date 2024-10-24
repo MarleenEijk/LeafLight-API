@@ -31,7 +31,7 @@ namespace LeafLight_API.Controllers
 
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserDto>> GetUserById(int id)
+        public async Task<ActionResult<UserDto>> GetUserById(long id)
         {
             var userDto = await _userService.GetUserByIdAsync(id);
             if (userDto == null)
@@ -42,14 +42,14 @@ namespace LeafLight_API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteUserById(int id)
+        public async Task<ActionResult> DeleteUserById(long id)
         {
             await _userService.DeleteUserAsync(id);
             return NoContent();
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<UserDto>> UpdateUser(int id, UserDto userDto)
+        public async Task<ActionResult<UserDto>> UpdateUser(long id, UserDto userDto)
         {
             if (id != userDto.Id)
             {

@@ -10,6 +10,6 @@ namespace CORE.Interfaces
     public interface IPlantService
     {
         Task<IEnumerable<PlantDto>> GetAllPlantsAsync();
-        Task<PlantDto?> GetPlantByIdAsync(int id);
+        Task<PlantDto?> GetPlantByIdAsync(long id);
     }
 }

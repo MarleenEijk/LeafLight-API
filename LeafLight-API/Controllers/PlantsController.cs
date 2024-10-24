@@ -25,7 +25,7 @@ namespace LeafLight_API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<PlantDto>> GetPlantById(int id)
+        public async Task<ActionResult<PlantDto>> GetPlantById(long id)
         {
             var plantDto = await _plantService.GetPlantByIdAsync(id);
             if (plantDto == null)

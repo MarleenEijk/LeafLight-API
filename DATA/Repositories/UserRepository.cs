@@ -17,19 +17,20 @@ namespace DATA.Repositories
 
         public async Task<IEnumerable<User>> GetAllAsync()
         {
-            var userDtos = await _context.Users.ToListAsync();
+            var userDtos = await _context.user.ToListAsync();
             return userDtos.Select(dto => new User
             {
                 Id = dto.Id,
                 Name = dto.Name,
-                Emailadress = dto.Emailadress,
+                Emailaddress = dto.Emailaddress,
                 Password = dto.Password
             });
         }
 
-        public async Task<User?> GetByIdAsync(int id)
+
+        public async Task<User?> GetByIdAsync(long id)
         {
-            var userDto = await _context.Users.FindAsync(id);
+            var userDto = await _context.user.FindAsync(id);
             if (userDto == null)
             {
                 return null;
@@ -39,24 +40,24 @@ namespace DATA.Repositories
             {
                 Id = userDto.Id,
                 Name = userDto.Name,
-                Emailadress = userDto.Emailadress,
+                Emailaddress = userDto.Emailaddress,
                 Password = userDto.Password
             };
         }
 
         public async Task UpdateUserAsync(User user)
         {
-            var userDto = await _context.Users.FindAsync(user.Id);
+            var userDto = await _context.user.FindAsync(user.Id);
             if (userDto == null)
             {
                 throw new KeyNotFoundException($"User with id: {user.Id} was not found.");
             }
 
             userDto.Name = user.Name;
-            userDto.Emailadress = user.Emailadress;
+            userDto.Emailaddress = user.Emailaddress;
             userDto.Password = user.Password;
 
-            _context.Users.Update(userDto);
+            _context.user.Update(userDto);
             await _context.SaveChangesAsync();
         }
 
@@ -65,24 +66,24 @@ namespace DATA.Repositories
             var userDto = new UserDto
             {
                 Name = user.Name,
-                Emailadress = user.Emailadress,
+                Emailaddress = user.Emailaddress,
                 Password = user.Password
             };
 
-            await _context.Users.AddAsync(userDto);
+            await _context.user.AddAsync(userDto);
             await _context.SaveChangesAsync();
 
             user.Id = userDto.Id;
         }
 
-        public async Task DeleteUserAsync(int id)
+        public async Task DeleteUserAsync(long id)
         {
-            var userDto = await _context.Users.FindAsync(id);
+            var userDto = await _context.user.FindAsync(id);
             if (userDto == null)
             {
                 throw new KeyNotFoundException($"User with id: {id} was not found.");
             }
-            _context.Users.Remove(userDto);
+            _context.user.Remove(userDto);
             await _context.SaveChangesAsync();
 
         }

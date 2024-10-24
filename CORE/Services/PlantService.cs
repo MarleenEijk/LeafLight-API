@@ -25,14 +25,14 @@ namespace CORE.Services
                 Name = plant.Name,
                 Description = plant.Description,
                 Location = plant.Location,
-                Watering = plant.Watering,
+                Water = plant.Water,
                 Repotting = plant.Repotting,
                 Toxic = plant.Toxic,
                 Image = plant.Image
             }).ToList();
         }
 
-        public async Task<PlantDto?> GetPlantByIdAsync(int id)
+        public async Task<PlantDto?> GetPlantByIdAsync(long id)
         {
             var plant = await _plantRepository.GetByIdAsync(id);
             if (plant == null)
@@ -46,7 +46,7 @@ namespace CORE.Services
                 Name = plant.Name,
                 Description = plant.Description,
                 Location = plant.Location,
-                Watering = plant.Watering,
+                Water = plant.Water,
                 Repotting = plant.Repotting,
                 Toxic = plant.Toxic,
                 Image = plant.Image
