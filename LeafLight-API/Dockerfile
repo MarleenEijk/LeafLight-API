@@ -9,6 +9,8 @@ FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG configuration=Release
 WORKDIR /src
 COPY ["LeafLight-API/LeafLight-API.csproj", "LeafLight-API/"]
+COPY ["CORE/CORE.csproj", "CORE/"]
+COPY ["DATA/DATA.csproj", "DATA/"]
 RUN dotnet restore "LeafLight-API/LeafLight-API.csproj"
 COPY . .
 WORKDIR "/src/LeafLight-API"
