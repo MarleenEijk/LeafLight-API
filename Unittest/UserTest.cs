@@ -60,5 +60,19 @@ namespace Unittest
             var result = await _repository.GetByIdAsync(1);
             Assert.Null(result);
         }
+
+        [Fact]
+        public async Task GetAllAsync_ShouldReturnEmptyList_WhenNoUsersAdded()
+        {
+            var result = await _repository.GetAllAsync();
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public async Task GetByIdAsync_ShouldReturnNull_WhenUserDoesNotExist()
+        {
+            var result = await _repository.GetByIdAsync(999);
+            Assert.Null(result);
+        }
     }
 }

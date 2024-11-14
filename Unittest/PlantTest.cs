@@ -35,5 +35,19 @@ namespace Unittest
             Assert.NotNull(result);
             Assert.Equal("Plant1", result?.Name);
         }
+
+        [Fact]
+        public async Task GetAllAsync_ShouldReturnEmptyList_WhenNoPlantsAdded()
+        {
+            var result = await _repository.GetAllAsync();
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public async Task GetByIdAsync_ShouldReturnNull_WhenPlantDoesNotExist()
+        {
+            var result = await _repository.GetByIdAsync(999);
+            Assert.Null(result);
+        }
     }
 }
