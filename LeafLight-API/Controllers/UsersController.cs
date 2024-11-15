@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CORE.Interfaces;
 using CORE.Dto;
+using CORE.Services;
 
 namespace LeafLight_API.Controllers
 {
@@ -8,9 +9,9 @@ namespace LeafLight_API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly UserService _userService;
 
-        public UsersController(IUserService userService)
+        public UsersController(UserService userService)
         {
             _userService = userService;
         }

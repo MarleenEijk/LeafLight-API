@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CORE.Services
 {
-    public class UserService : IUserService
+    public class UserService
     {
         private readonly IUserRepository _userRepository;
 

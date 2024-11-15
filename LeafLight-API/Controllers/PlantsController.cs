@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CORE.Models;
-using CORE.Interfaces;
 using CORE.Services;
 using CORE.Dto;
 
@@ -10,9 +9,9 @@ namespace LeafLight_API.Controllers
     [ApiController]
     public class PlantsController : ControllerBase
     {
-        private readonly IPlantService _plantService;
+        private readonly PlantService _plantService;
 
-        public PlantsController(IPlantService plantService)
+        public PlantsController(PlantService plantService)
         {
             _plantService = plantService;
         }
