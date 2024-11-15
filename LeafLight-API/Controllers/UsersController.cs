@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using CORE.Interfaces;
 using CORE.Dto;
 using CORE.Services;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LeafLight_API.Controllers
 {
@@ -27,9 +28,8 @@ namespace LeafLight_API.Controllers
         public async Task<ActionResult<UserDto>> CreateUser(UserDto userDto)
         {
             var createdUser = await _userService.AddUserAsync(userDto);
-            return CreatedAtAction(nameof(GetUserById), new { id = userDto.Id }, userDto);
+            return CreatedAtAction(nameof(GetUserById), new { id = createdUser.Id }, createdUser);
         }
-
 
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetUserById(long id)
@@ -56,9 +56,8 @@ namespace LeafLight_API.Controllers
             {
                 return BadRequest();
             }
-            await _userService.UpdateUserAsync(userDto);
-            return CreatedAtAction(nameof(GetUserById), new { id = userDto.Id }, userDto);
+            var updatedUser = await _userService.UpdateUserAsync(userDto);
+            return CreatedAtAction(nameof(GetUserById), new { id = updatedUser.Id }, updatedUser);
         }
     }
 }
-

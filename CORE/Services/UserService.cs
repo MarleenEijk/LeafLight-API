@@ -1,5 +1,5 @@
-﻿using CORE.Interfaces;
-using CORE.Dto;
+﻿using CORE.Dto;
+using CORE.Interfaces;
 using CORE.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,20 @@ namespace CORE.Services
 
         public UserService(IUserRepository userRepository)
         {
-            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+            _userRepository = userRepository;
+        }
+
+        public async Task<UserDto> AddUserAsync(UserDto userDto)
+        {
+            var user = new User
+            {
+                Id = userDto.Id,
+                Name = userDto.Name,
+                Emailaddress = userDto.Emailaddress,
+                Password = userDto.Password
+            };
+            await _userRepository.AddUserAsync(user);
+            return userDto;
         }
 
         public async Task<IEnumerable<UserDto>> GetAllUsersAsync()
@@ -25,7 +38,7 @@ namespace CORE.Services
                 Name = user.Name,
                 Emailaddress = user.Emailaddress,
                 Password = user.Password
-            }).ToList();
+            });
         }
 
         public async Task<UserDto?> GetUserByIdAsync(long id)
@@ -45,23 +58,7 @@ namespace CORE.Services
             };
         }
 
-        public async Task<UserDto> AddUserAsync(UserDto userDto)
-        {
-            var user = new User
-            {
-                Name = userDto.Name,
-                Emailaddress = userDto.Emailaddress,
-                Password = userDto.Password
-            };
-
-            await _userRepository.AddUserAsync(user);
-
-            userDto.Id = user.Id;
-
-            return userDto;
-        }
-
-        public async Task UpdateUserAsync(UserDto userDto)
+        public async Task<UserDto> UpdateUserAsync(UserDto userDto)
         {
             var user = new User
             {
@@ -70,8 +67,8 @@ namespace CORE.Services
                 Emailaddress = userDto.Emailaddress,
                 Password = userDto.Password
             };
-
             await _userRepository.UpdateUserAsync(user);
+            return userDto;
         }
 
         public async Task DeleteUserAsync(long id)
@@ -80,4 +77,3 @@ namespace CORE.Services
         }
     }
 }
-

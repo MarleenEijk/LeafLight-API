@@ -25,9 +25,7 @@ namespace LeafLight_API
             });
 
             builder.Services.AddScoped<IUserRepository, UserRepository>();
-            builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IPlantRepository, PlantRepository>();
-            builder.Services.AddScoped<IPlantService, PlantService>();
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();

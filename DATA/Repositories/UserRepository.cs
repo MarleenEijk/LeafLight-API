@@ -1,8 +1,10 @@
 ﻿using CORE.Interfaces;
+using CORE.Models;
 using CORE.Dto;
 using Microsoft.EntityFrameworkCore;
-using CORE.Models;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace DATA.Repositories
 {
@@ -27,7 +29,6 @@ namespace DATA.Repositories
             });
         }
 
-
         public async Task<User?> GetByIdAsync(long id)
         {
             var userDto = await _context.user.FindAsync(id);
@@ -45,26 +46,11 @@ namespace DATA.Repositories
             };
         }
 
-        public async Task UpdateUserAsync(User user)
-        {
-            var userDto = await _context.user.FindAsync(user.Id);
-            if (userDto == null)
-            {
-                throw new KeyNotFoundException($"User with id: {user.Id} was not found.");
-            }
-
-            userDto.Name = user.Name;
-            userDto.Emailaddress = user.Emailaddress;
-            userDto.Password = user.Password;
-
-            _context.user.Update(userDto);
-            await _context.SaveChangesAsync();
-        }
-
         public async Task AddUserAsync(User user)
         {
             var userDto = new UserDto
             {
+                Id = user.Id,
                 Name = user.Name,
                 Emailaddress = user.Emailaddress,
                 Password = user.Password
@@ -72,8 +58,22 @@ namespace DATA.Repositories
 
             await _context.user.AddAsync(userDto);
             await _context.SaveChangesAsync();
+        }
 
-            user.Id = userDto.Id;
+        public async Task UpdateUserAsync(User user)
+        {
+            var existingUserDto = await _context.user.FindAsync(user.Id);
+            if (existingUserDto == null)
+            {
+                throw new KeyNotFoundException($"User with id: {user.Id} was not found.");
+            }
+
+            existingUserDto.Name = user.Name;
+            existingUserDto.Emailaddress = user.Emailaddress;
+            existingUserDto.Password = user.Password;
+
+            _context.user.Update(existingUserDto);
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteUserAsync(long id)
@@ -83,9 +83,9 @@ namespace DATA.Repositories
             {
                 throw new KeyNotFoundException($"User with id: {id} was not found.");
             }
+
             _context.user.Remove(userDto);
             await _context.SaveChangesAsync();
-
         }
     }
 }

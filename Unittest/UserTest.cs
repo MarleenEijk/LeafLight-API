@@ -1,4 +1,6 @@
-﻿using CORE.Models;
+﻿using CORE.Dto;
+using CORE.Models;
+using CORE.Services;
 using Unittest.FakeRepositories;
 using Xunit;
 
@@ -6,72 +8,76 @@ namespace Unittest
 {
     public class UserTest
     {
-        private readonly FakeUserRepository _repository;
+        private readonly UserService _userService;
+        private readonly FakeUserRepository _fakeUserRepository;
 
         public UserTest()
         {
-            _repository = new FakeUserRepository();
+            _fakeUserRepository = new FakeUserRepository();
+            _userService = new UserService(_fakeUserRepository);
         }
 
         [Fact]
         public async Task AddUserAsync_ShouldAddUser()
         {
-            var user = new User { Id = 1, Name = "John Doe", Emailaddress = "john@example.com", Password = "password" };
-            await _repository.AddUserAsync(user);
+            var userDto = new UserDto { Id = 1, Name = "John Doe", Emailaddress = "john@example.com", Password = "password" };
 
-            var result = await _repository.GetByIdAsync(1);
+            await _userService.AddUserAsync(userDto);
+
+            var result = await _userService.GetUserByIdAsync(1);
             Assert.NotNull(result);
             Assert.Equal("John Doe", result?.Name);
         }
 
         [Fact]
-        public async Task GetAllAsync_ShouldReturnAllUsers()
+        public async Task GetAllUsersAsync_ShouldReturnAllUsers()
         {
-            var user1 = new User { Id = 1, Name = "John Doe", Emailaddress = "john@example.com", Password = "password" };
-            var user2 = new User { Id = 2, Name = "Jane Doe", Emailaddress = "jane@example.com", Password = "password" };
-            await _repository.AddUserAsync(user1);
-            await _repository.AddUserAsync(user2);
+            var userDto1 = new UserDto { Id = 1, Name = "John Doe", Emailaddress = "john@example.com", Password = "password" };
+            var userDto2 = new UserDto { Id = 2, Name = "Jane Doe", Emailaddress = "jane@example.com", Password = "password" };
 
-            var result = await _repository.GetAllAsync();
+            await _userService.AddUserAsync(userDto1);
+            await _userService.AddUserAsync(userDto2);
+
+            var result = await _userService.GetAllUsersAsync();
             Assert.Equal(2, result.Count());
         }
 
         [Fact]
         public async Task UpdateUserAsync_ShouldUpdateUser()
         {
-            var user = new User { Id = 1, Name = "John Doe", Emailaddress = "john@example.com", Password = "password" };
-            await _repository.AddUserAsync(user);
+            var userDto = new UserDto { Id = 1, Name = "John Doe", Emailaddress = "john@example.com", Password = "password" };
+            await _userService.AddUserAsync(userDto);
 
-            user.Name = "John Smith";
-            await _repository.UpdateUserAsync(user);
+            userDto.Name = "John Smith";
+            await _userService.UpdateUserAsync(userDto);
 
-            var result = await _repository.GetByIdAsync(1);
+            var result = await _userService.GetUserByIdAsync(1);
             Assert.Equal("John Smith", result?.Name);
         }
 
         [Fact]
         public async Task DeleteUserAsync_ShouldRemoveUser()
         {
-            var user = new User { Id = 1, Name = "John Doe", Emailaddress = "john@example.com", Password = "password" };
-            await _repository.AddUserAsync(user);
+            var userDto = new UserDto { Id = 1, Name = "John Doe", Emailaddress = "john@example.com", Password = "password" };
+            await _userService.AddUserAsync(userDto);
 
-            await _repository.DeleteUserAsync(1);
+            await _userService.DeleteUserAsync(1);
 
-            var result = await _repository.GetByIdAsync(1);
+            var result = await _userService.GetUserByIdAsync(1);
             Assert.Null(result);
         }
 
         [Fact]
-        public async Task GetAllAsync_ShouldReturnEmptyList_WhenNoUsersAdded()
+        public async Task GetAllUsersAsync_ShouldReturnEmptyList_WhenNoUsersAdded()
         {
-            var result = await _repository.GetAllAsync();
+            var result = await _userService.GetAllUsersAsync();
             Assert.Empty(result);
         }
 
         [Fact]
-        public async Task GetByIdAsync_ShouldReturnNull_WhenUserDoesNotExist()
+        public async Task GetUserByIdAsync_ShouldReturnNull_WhenUserDoesNotExist()
         {
-            var result = await _repository.GetByIdAsync(999);
+            var result = await _userService.GetUserByIdAsync(999);
             Assert.Null(result);
         }
     }

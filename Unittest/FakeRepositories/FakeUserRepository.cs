@@ -1,4 +1,5 @@
-﻿using CORE.Interfaces;
+﻿using CORE.Dto;
+using CORE.Interfaces;
 using CORE.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace Unittest.FakeRepositories
 {
     public class FakeUserRepository : IUserRepository
     {
-        private readonly List<User> _users = new();
+        private readonly List<User> _users = new List<User>();
 
         public Task<IEnumerable<User>> GetAllAsync()
         {
@@ -30,22 +31,26 @@ namespace Unittest.FakeRepositories
         public Task UpdateUserAsync(User user)
         {
             var existingUser = _users.FirstOrDefault(u => u.Id == user.Id);
-            if (existingUser != null)
+            if (existingUser == null)
             {
-                existingUser.Name = user.Name;
-                existingUser.Emailaddress = user.Emailaddress;
-                existingUser.Password = user.Password;
+                throw new KeyNotFoundException($"User with id: {user.Id} was not found.");
             }
+
+            existingUser.Name = user.Name;
+            existingUser.Emailaddress = user.Emailaddress;
+            existingUser.Password = user.Password;
             return Task.CompletedTask;
         }
 
         public Task DeleteUserAsync(long id)
         {
             var user = _users.FirstOrDefault(u => u.Id == id);
-            if (user != null)
+            if (user == null)
             {
-                _users.Remove(user);
+                throw new KeyNotFoundException($"User with id: {id} was not found.");
             }
+
+            _users.Remove(user);
             return Task.CompletedTask;
         }
     }
