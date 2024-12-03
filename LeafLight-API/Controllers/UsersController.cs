@@ -59,5 +59,13 @@ namespace LeafLight_API.Controllers
             var updatedUser = await _userService.UpdateUserAsync(userDto);
             return CreatedAtAction(nameof(GetUserById), new { id = updatedUser.Id }, updatedUser);
         }
+
+        [HttpGet("exists")]
+        public async Task<ActionResult<bool>> EmailExists([FromQuery] string email)
+        {
+            var exists = await _userService.EmailExistsAsync(email);
+            return Ok(exists);
+        }
+
     }
 }

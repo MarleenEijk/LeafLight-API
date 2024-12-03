@@ -9,6 +9,6 @@ namespace CORE.Interfaces
         Task AddUserAsync(User user);
         Task UpdateUserAsync(User user);
         Task DeleteUserAsync(long id);
-
+        Task<bool> EmailExistsAsync(string email);
     }
 }

@@ -75,5 +75,11 @@ namespace CORE.Services
         {
             await _userRepository.DeleteUserAsync(id);
         }
+
+        public async Task<bool> EmailExistsAsync(string email)
+        {
+            return await _userRepository.EmailExistsAsync(email);
+        }
+
     }
 }
