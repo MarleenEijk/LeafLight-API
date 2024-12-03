@@ -77,7 +77,7 @@ namespace Unittest
         [Fact]
         public async Task GetUserByIdAsync_ShouldReturnNull_WhenUserDoesNotExist()
         {
-            var result = await _userService.GetUserByIdAsync(999);
+            var result = await _userService.GetUserByIdAsync(5678);
             Assert.Null(result);
         }
     }
