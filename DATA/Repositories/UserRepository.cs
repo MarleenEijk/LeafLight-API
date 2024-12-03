@@ -1,6 +1,6 @@
-﻿using CORE.Interfaces;
+﻿using CORE.Dto;
+using CORE.Interfaces;
 using CORE.Models;
-using CORE.Dto;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -93,5 +93,21 @@ namespace DATA.Repositories
             return await _context.user.AnyAsync(u => u.Emailaddress == email);
         }
 
+        public async Task<User?> GetUserByEmailAndPasswordAsync(string email, string password)
+        {
+            var userDto = await _context.user.FirstOrDefaultAsync(u => u.Emailaddress == email && u.Password == password);
+            if (userDto == null)
+            {
+                return null;
+            }
+
+            return new User
+            {
+                Id = userDto.Id,
+                Name = userDto.Name,
+                Emailaddress = userDto.Emailaddress,
+                Password = userDto.Password
+            };
+        }
     }
 }

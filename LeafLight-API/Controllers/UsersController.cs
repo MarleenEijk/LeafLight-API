@@ -67,5 +67,21 @@ namespace LeafLight_API.Controllers
             return Ok(exists);
         }
 
+        [HttpPost("login")]
+        public async Task<ActionResult<UserDto>> Login([FromBody] UserDto userDto)
+        {
+            if (string.IsNullOrEmpty(userDto.Emailaddress) || string.IsNullOrEmpty(userDto.Password))
+            {
+                return BadRequest("Email and password are required.");
+            }
+
+            var loggedInUser = await _userService.LoginAsync(userDto.Emailaddress, userDto.Password);
+            if (loggedInUser == null)
+            {
+                return Unauthorized();
+            }
+
+            return Ok(loggedInUser);
+        }
     }
 }

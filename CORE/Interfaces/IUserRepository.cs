@@ -10,5 +10,6 @@ namespace CORE.Interfaces
         Task UpdateUserAsync(User user);
         Task DeleteUserAsync(long id);
         Task<bool> EmailExistsAsync(string email);
+        Task<User?> GetUserByEmailAndPasswordAsync(string email, string password);
     }
 }

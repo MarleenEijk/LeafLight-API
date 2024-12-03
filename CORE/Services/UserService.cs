@@ -81,5 +81,18 @@ namespace CORE.Services
             return await _userRepository.EmailExistsAsync(email);
         }
 
+        public async Task<UserDto?> LoginAsync(string email, string password)
+        {
+            var user = await _userRepository.GetUserByEmailAndPasswordAsync(email, password);
+            if (user == null) return null;
+
+            return new UserDto
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Emailaddress = user.Emailaddress,
+                Password = user.Password
+            };
+        }
     }
 }
