@@ -25,7 +25,6 @@ namespace DATA.Repositories
                 Id = dto.Id,
                 Name = dto.Name,
                 Emailaddress = dto.Emailaddress,
-                Password = dto.Password
             });
         }
 
@@ -42,7 +41,6 @@ namespace DATA.Repositories
                 Id = userDto.Id,
                 Name = userDto.Name,
                 Emailaddress = userDto.Emailaddress,
-                Password = userDto.Password
             };
         }
 
@@ -106,7 +104,6 @@ namespace DATA.Repositories
                 Id = userDto.Id,
                 Name = userDto.Name,
                 Emailaddress = userDto.Emailaddress,
-                Password = userDto.Password
             };
         }
     }

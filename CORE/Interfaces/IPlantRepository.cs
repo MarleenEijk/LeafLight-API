@@ -1,10 +1,11 @@
-﻿using CORE.Models;
+﻿using CORE.Dto;
 
 namespace CORE.Interfaces
 {
     public interface IPlantRepository
     {
-        Task<IEnumerable<Plant>> GetAllAsync();
-        Task<Plant?> GetByIdAsync(long id);
+        Task<IEnumerable<PlantDto>> GetAllAsync();
+        Task<PlantDto?> GetByIdAsync(long id);
+        Task<IEnumerable<IssueDto>> GetPlantIssuesAsync();
     }
 }

@@ -1,4 +1,5 @@
-﻿using CORE.Interfaces;
+﻿using CORE.Dto;
+using CORE.Interfaces;
 using CORE.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,41 +14,32 @@ namespace DATA.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Plant>> GetAllAsync()
+        public async Task<IEnumerable<PlantDto>> GetAllAsync()
         {
             var plantDtos = await _context.plant.ToListAsync();
-            return plantDtos.Select(dto => new Plant
-            {
-                Id = dto.Id,
-                Name = dto.Name,
-                Description = dto.Description,
-                Location = dto.Location,
-                Water = dto.Water,
-                Repotting = dto.Repotting,
-                Toxic = dto.Toxic,
-                Image = dto.Image
-            });
+            return plantDtos;
         }
 
-        public async Task<Plant?> GetByIdAsync(long id)
+        public async Task<PlantDto?> GetByIdAsync(long id)
         {
-            var plantDto = await _context.plant.FindAsync(id);
-            if (plantDto == null)
-            {
-                return null;
-            }
+            return await _context.plant.FindAsync(id);
+        }
 
-            return new Plant
-            {
-                Id = plantDto.Id,
-                Name = plantDto.Name,
-                Description = plantDto.Description,
-                Location = plantDto.Location,
-                Water = plantDto.Water,
-                Repotting = plantDto.Repotting,
-                Toxic = plantDto.Toxic,
-                Image = plantDto.Image
-            };
+        public async Task<IEnumerable<IssueDto>> GetPlantIssuesAsync()
+        {
+            var result = await (from pi in _context.Set<PlantIssue>()
+                                join p in _context.plant on pi.PlantId equals p.Id
+                                join i in _context.issue on pi.IssueId equals i.Id
+                                select new IssueDto
+                                {
+                                    Id = i.Id,
+                                    Name = i.Name,
+                                    Cause = i.Cause,
+                                    Solution = i.Solution,
+                                    Image = i.Image
+                                }).ToListAsync();
+
+            return result;
         }
     }
 }

@@ -19,17 +19,7 @@ namespace CORE.Services
         public async Task<IEnumerable<PlantDto>> GetAllPlantsAsync()
         {
             var plants = await _plantRepository.GetAllAsync();
-            return plants.Select(plant => new PlantDto
-            {
-                Id = plant.Id,
-                Name = plant.Name,
-                Description = plant.Description,
-                Location = plant.Location,
-                Water = plant.Water,
-                Repotting = plant.Repotting,
-                Toxic = plant.Toxic,
-                Image = plant.Image
-            }).ToList();
+            return plants;
         }
 
         public async Task<PlantDto?> GetPlantByIdAsync(long id)

@@ -1,4 +1,5 @@
-﻿using CORE.Interfaces;
+﻿using CORE.Dto;
+using CORE.Interfaces;
 using CORE.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,21 @@ namespace Unittest.FakeRepositories
         public void AddPlant(Plant plant)
         {
             _plants.Add(plant);
+        }
+
+        Task<IEnumerable<PlantDto>> IPlantRepository.GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<PlantDto?> IPlantRepository.GetByIdAsync(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<IssueDto>> GetPlantIssuesAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }
