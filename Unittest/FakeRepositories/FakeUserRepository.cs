@@ -53,5 +53,15 @@ namespace Unittest.FakeRepositories
             _users.Remove(user);
             return Task.CompletedTask;
         }
+
+        public Task<bool> EmailExistsAsync(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<User?> GetUserByEmailAndPasswordAsync(string email, string password)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

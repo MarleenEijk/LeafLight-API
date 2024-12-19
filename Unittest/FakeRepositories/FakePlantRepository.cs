@@ -11,15 +11,43 @@ namespace Unittest.FakeRepositories
     {
         private readonly List<Plant> _plants = new();
 
-        public Task<IEnumerable<Plant>> GetAllAsync()
+        public Task<IEnumerable<PlantDto>> GetAllAsync()
         {
-            return Task.FromResult(_plants.AsEnumerable());
+            var plantDtos = _plants.Select(p => new PlantDto
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Description = p.Description,
+                Location = p.Location,
+                Water = p.Water,
+                Repotting = p.Repotting,
+                Toxic = p.Toxic,
+                Image = p.Image
+            });
+            return Task.FromResult(plantDtos.AsEnumerable());
         }
 
-        public Task<Plant?> GetByIdAsync(long id)
+        public Task<PlantDto?> GetByIdAsync(long id)
         {
             var plant = _plants.FirstOrDefault(p => p.Id == id);
-            return Task.FromResult(plant);
+            if (plant == null)
+            {
+                return Task.FromResult<PlantDto?>(null);
+            }
+
+            var plantDto = new PlantDto
+            {
+                Id = plant.Id,
+                Name = plant.Name,
+                Description = plant.Description,
+                Location = plant.Location,
+                Water = plant.Water,
+                Repotting = plant.Repotting,
+                Toxic = plant.Toxic,
+                Image = plant.Image
+            };
+
+            return Task.FromResult<PlantDto?>(plantDto);
         }
 
         public void AddPlant(Plant plant)
@@ -27,19 +55,10 @@ namespace Unittest.FakeRepositories
             _plants.Add(plant);
         }
 
-        Task<IEnumerable<PlantDto>> IPlantRepository.GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<PlantDto?> IPlantRepository.GetByIdAsync(long id)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<IEnumerable<IssueDto>> GetPlantIssuesAsync()
         {
-            throw new NotImplementedException();
+            var issues = new List<IssueDto>();
+            return Task.FromResult(issues.AsEnumerable());
         }
     }
 }
