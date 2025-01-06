@@ -16,15 +16,22 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
+    
     - name: Restore dependencies
-      run: dotnet restore LeafLight-API.sln
+      run: dotnet restore
+
+    - name: Lint Check
+      run: dotnet format --verify-no-changes
+      env:
+        DOTNET_NOLOGO: 1
 
     - name: Build
-      run: dotnet build LeafLight-API.sln --no-restore --configuration Release
-    
+      run: dotnet build --no-restore
+
     - name: Test
-      run: dotnet test LeafLight-API.sln --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal
