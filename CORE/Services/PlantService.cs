@@ -42,5 +42,20 @@ namespace CORE.Services
                 Image = plant.Image
             };
         }
+
+        public async Task CreatePlantAsync(PlantDto plantDto)
+        {
+            if (plantDto == null)
+            {
+                throw new ArgumentNullException(nameof(plantDto));
+            }
+
+            await _plantRepository.AddAsync(plantDto);
+        }
+
+        public async Task DeletePlantAsync(long id)
+        {
+            await _plantRepository.DeleteAsync(id);
+        }
     }
 }

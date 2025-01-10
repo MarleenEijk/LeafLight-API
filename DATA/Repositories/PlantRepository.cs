@@ -41,5 +41,32 @@ namespace DATA.Repositories
 
             return result;
         }
+
+        public async Task AddAsync(PlantDto plantDto)
+        {
+            var plant = new Plant
+            {
+                Name = plantDto.Name,
+                Description = plantDto.Description,
+                Location = plantDto.Location,
+                Water = plantDto.Water,
+                Repotting = plantDto.Repotting,
+                Toxic = plantDto.Toxic,
+                Image = plantDto.Image
+            };
+
+            _context.plant.Add(plantDto);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(long id)
+        {
+            var plant = await _context.plant.FindAsync(id);
+            if (plant != null)
+            {
+                _context.plant.Remove(plant);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

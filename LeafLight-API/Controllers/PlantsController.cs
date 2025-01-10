@@ -34,5 +34,24 @@ namespace LeafLight_API.Controllers
             }
             return Ok(plantDto);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> CreatePlantAsync([FromBody] PlantDto plantDto)
+        {
+            if (plantDto == null)
+            {
+                return BadRequest("Plant data is required.");
+            }
+
+            await _plantService.CreatePlantAsync(plantDto);
+            return CreatedAtAction(nameof(GetPlantById), new { id = plantDto.Id }, plantDto);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeletePlantAsync(long id)
+        {
+            await _plantService.DeletePlantAsync(id);
+            return NoContent();
+        }
     }
 }
