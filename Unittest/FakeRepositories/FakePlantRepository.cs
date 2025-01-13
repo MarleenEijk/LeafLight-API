@@ -50,25 +50,37 @@ namespace Unittest.FakeRepositories
             return Task.FromResult<PlantDto?>(plantDto);
         }
 
-        public void AddPlant(Plant plant)
+        public Task AddAsync(PlantDto plantDto)
         {
+            var plant = new Plant
+            {
+                Id = plantDto.Id,
+                Name = plantDto.Name,
+                Description = plantDto.Description,
+                Location = plantDto.Location,
+                Water = plantDto.Water,
+                Repotting = plantDto.Repotting,
+                Toxic = plantDto.Toxic,
+                Image = plantDto.Image
+            };
             _plants.Add(plant);
+            return Task.CompletedTask;
+        }
+
+        public Task DeleteAsync(long id)
+        {
+            var plant = _plants.FirstOrDefault(p => p.Id == id);
+            if (plant != null)
+            {
+                _plants.Remove(plant);
+            }
+            return Task.CompletedTask;
         }
 
         public Task<IEnumerable<IssueDto>> GetPlantIssuesAsync()
         {
             var issues = new List<IssueDto>();
             return Task.FromResult(issues.AsEnumerable());
-        }
-
-        Task IPlantRepository.AddAsync(PlantDto plantDto)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task IPlantRepository.DeleteAsync(long id)
-        {
-            throw new NotImplementedException();
         }
     }
 }
