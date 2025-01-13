@@ -24,8 +24,8 @@ jobs:
 
     - name: Lint Check
       run: |
-        dotnet format style ./<SLN_NAME>.sln --verify-no-changes
-        dotnet format analyzers ./<SLN_NAME>.sln --verify-no-changes
+        dotnet format style ./LeafLight-API.sln --verify-no-changes
+        dotnet format analyzers ./LeafLight-API.sln --verify-no-changes
       env:
         DOTNET_NOLOGO: 1
 
