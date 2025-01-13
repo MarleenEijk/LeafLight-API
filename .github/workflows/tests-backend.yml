@@ -23,7 +23,9 @@ jobs:
       run: dotnet restore
 
     - name: Lint Check
-      run: dotnet format --verify-no-changes
+      run: |
+        dotnet format style ./<SLN_NAME>.sln --verify-no-changes
+        dotnet format analyzers ./<SLN_NAME>.sln --verify-no-changes
       env:
         DOTNET_NOLOGO: 1
 
