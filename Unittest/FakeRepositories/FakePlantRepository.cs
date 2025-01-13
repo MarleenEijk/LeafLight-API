@@ -60,5 +60,15 @@ namespace Unittest.FakeRepositories
             var issues = new List<IssueDto>();
             return Task.FromResult(issues.AsEnumerable());
         }
+
+        Task IPlantRepository.AddAsync(PlantDto plantDto)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task IPlantRepository.DeleteAsync(long id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

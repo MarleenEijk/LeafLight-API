@@ -1,13 +1,26 @@
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS build
-WORKDIR /source
-COPY . .
-RUN dotnet restore "./LeafLight-API/LeafLight-API.csproj"
-RUN dotnet publish "./LeafLight-API/LeafLight-API.csproj"
-
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
-COPY --from=build /app ./
+EXPOSE 5254
 
-EXPOSE 5000
+ENV ASPNETCORE_URLS=http://+:5254
 
+USER app
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG configuration=Release
+WORKDIR /src
+COPY ["LeafLight-API/LeafLight-API.csproj", "LeafLight-API/"]
+COPY ["CORE/CORE.csproj", "CORE/"]
+COPY ["DATA/DATA.csproj", "DATA/"]
+RUN dotnet restore "LeafLight-API/LeafLight-API.csproj"
+COPY . .
+WORKDIR "/src/LeafLight-API"
+RUN dotnet build "LeafLight-API.csproj" -c $configuration -o /app/build
+
+FROM build AS publish
+ARG configuration=Release
+RUN dotnet publish "LeafLight-API.csproj" -c $configuration -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "LeafLight-API.dll"]
