@@ -11,7 +11,7 @@ WORKDIR /src
 COPY ["LeafLight-API/LeafLight-API.csproj", "LeafLight-API/"]
 COPY ["CORE/CORE.csproj", "CORE/"]
 COPY ["DATA/DATA.csproj", "DATA/"]
-RUN dotnet restore "LeafLight-API/LeafLight-API.csproj"
+RUN dotnet restore "/LeafLight-API.csproj"
 COPY . .
 WORKDIR "/src/LeafLight-API"
 RUN dotnet build "LeafLight-API.csproj" -c $configuration -o /app/build

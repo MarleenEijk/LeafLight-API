@@ -20,10 +20,28 @@ namespace Unittest
         [Fact]
         public async Task GetAllPlantsAsync_ShouldReturnAllPlants()
         {
-            var plant1 = new Plant { Id = 1, Name = "Plant1", Description = "Description1", 
-                Location = "Location1", Water = "Water1", Repotting = "Repotting1", Toxic = "Toxic1", Image = "Image1" };
-            var plant2 = new Plant { Id = 2, Name = "Plant2", Description = "Description2", 
-                Location = "Location2", Water = "Water2", Repotting = "Repotting2", Toxic = "Toxic2", Image = "Image2" };
+            var plant1 = new Plant
+            {
+                Id = 1,
+                Name = "Plant1",
+                Description = "Description1",
+                Location = "Location1",
+                Water = "Water1",
+                Repotting = "Repotting1",
+                Toxic = "Toxic1",
+                Image = "Image1"
+            };
+            var plant2 = new Plant
+            {
+                Id = 2,
+                Name = "Plant2",
+                Description = "Description2",
+                Location = "Location2",
+                Water = "Water2",
+                Repotting = "Repotting2",
+                Toxic = "Toxic2",
+                Image = "Image2"
+            };
             _fakePlantRepository.AddPlant(plant1);
             _fakePlantRepository.AddPlant(plant2);
 
@@ -34,8 +52,17 @@ namespace Unittest
         [Fact]
         public async Task GetPlantByIdAsync_ShouldReturnPlant()
         {
-            var plant = new Plant { Id = 1, Name = "Plant1", Description = "Description1", 
-                Location = "Location1", Water = "Water1", Repotting = "Repotting1", Toxic = "Toxic1", Image = "Image1" };
+            var plant = new Plant
+            {
+                Id = 1,
+                Name = "Plant1",
+                Description = "Description1",
+                Location = "Location1",
+                Water = "Water1",
+                Repotting = "Repotting1",
+                Toxic = "Toxic1",
+                Image = "Image1"
+            };
             _fakePlantRepository.AddPlant(plant);
 
             var result = await _plantService.GetPlantByIdAsync(1);
