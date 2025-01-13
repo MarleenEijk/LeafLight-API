@@ -77,6 +77,11 @@ namespace Unittest.FakeRepositories
             return Task.CompletedTask;
         }
 
+        public void AddPlant(Plant plant)
+        {
+            _plants.Add(plant);
+        }
+
         public Task<IEnumerable<IssueDto>> GetPlantIssuesAsync()
         {
             var issues = new List<IssueDto>();
