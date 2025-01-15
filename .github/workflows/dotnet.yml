@@ -52,7 +52,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build Docker Image
-      run: docker build -t leaflight-api:v1 -f ../Dockerfile ../
+      run: docker build -t leaflight-api:v1 -f ./Dockerfile .
 
     - name: Push Docker Image to DockerHub
       run: |
