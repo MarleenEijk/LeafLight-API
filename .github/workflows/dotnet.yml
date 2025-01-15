@@ -61,6 +61,9 @@ jobs:
 
     - name: Deploy Container
       run: |
+        # Stop and remove any previous container (if exists)
         docker container stop leaflight-api || true
         docker container rm leaflight-api || true
+        
+        # Run a new container with port mappings
         docker run -d --name leaflight-api -p 5254:5254 ${{ secrets.DOCKER_USERNAME }}/leaflight-api:v1
