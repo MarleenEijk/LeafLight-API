@@ -8,6 +8,6 @@ namespace CORE.Interfaces
         Task<IEnumerable<PlantDto>> GetAllAsync();
         Task<PlantDto?> GetByIdAsync(long id);
         Task<IEnumerable<IssueDto>> GetPlantIssuesAsync();
-        Task DeleteAsync(long id);
+        Task DeleteAsync(long id); 
     }
 }
